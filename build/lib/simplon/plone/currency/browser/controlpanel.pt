@@ -1,0 +1,88 @@
+                <metal:block use-macro="context/@@ploneform-macros/titlelessform">
+
+    <metal:top fill-slot="formtop">
+    <a href=""
+       class="link-parent"
+       tal:attributes="href string: ${context/portal_url}/plone_control_panel"
+       i18n:translate="label_up_to_plone_setup">
+    Up to Site Setup
+    </a>
+
+    <p i18n:translate="description-currency-controlpanel">
+        In this control panel you can manage the currencies available
+        in your Plone site.
+    </p>
+    </metal:top>
+
+
+            <metal:actions fill-slot="actions">
+              <div class="action" tal:repeat="action view/actions/values|nothing">
+                <input type="submit" tal:condition="python:action.id != 'form-buttons-delete'" tal:replace="structure action/render" />
+              </div>
+            </metal:actions>
+
+    <metal:bottom fill-slot="formbottom">
+    <fieldset id="fieldset-currencies">
+        <legend id="fieldset-currencies-legend" i18n:translate="legend-currencies">
+            Currencies
+        </legend>
+
+        <form action="." method="post" class="edit-form"
+            enctype="multipart/form-data" id="form-currencies"
+            tal:attributes="action request/URL;"
+            tal:define="currencies view/currencies">
+
+            <tal:block condition="currencies">
+                <table class="listing nosort controlpanel-listing">
+                    <thead>
+                        <tr>
+                            <th class="smallcolumn">&nbsp;</th>
+                            <th i18n:translate="label_currency_code">Currency</th>
+                            <th i18n:translate="label_currency_symbol">Symbol</th>
+                            <th i18n:translate="label_currency_rate">Rate</th>
+                            <th i18n:translate="label_currency_description">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tal:repeat repeat="currency currencies">
+                            <tr tal:define="oddrow repeat/currency/odd"
+                                tal:attributes="class python:oddrow and 'even' or 'odd'">
+                                <td>
+                                    <input type="checkbox"
+                                        name="currencies:list"
+                                        tal:condition="not:currency/protected"
+                                        tal:attributes="value currency/code"/>
+                                </td>
+                                <td>
+                                    <a href=""
+                                        tal:condition="not:currency/protected"
+                                        tal:attributes="href string:${context/portal_url}/++currency++${currency/code}/edit"
+                                        tal:content="currency/code">
+                                        EUR
+                                    </a>
+                                    <span tal:omit-tag=""
+                                        tal:condition="currency/protected"
+                                        tal:content="currency/code">
+                                        EUR
+                                    </span>
+                                </td>
+                                <td tal:content="currency/symbol">E</td>
+                                <td tal:content="currency/rate">1.0</td>
+                                <td tal:content="currency/description">Euro</td>
+                            </tr>
+                        </tal:repeat>
+                    </tbody>
+                </table>
+                <input type="submit" value="Delete" class="context destructive submit-widget button-field" name="form.buttons.delete" id="form-buttons-delete"
+                    i18n:attributes="value label_delete;"/>
+            </tal:block>
+        </form>
+        <form class="inlineDisplay" method="POST"
+            tal:attributes="action string:${context/absolute_url}/+currencies/Currency">
+            <input class="context" type="submit" value="Add currency"
+                name="form.button.Add"
+                i18n:attributes="value label_currency_add;" />
+        </form>
+    </fieldset>
+                    </metal:bottom>
+                </metal:block>

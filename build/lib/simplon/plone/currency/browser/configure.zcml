@@ -1,0 +1,62 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="plone">
+
+    <adapter
+        factory=".controlpanel.GlobalCurrencySettingsFactory"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        provides="simplon.plone.currency.interfaces.IGlobalCurrencySettings"
+        />
+
+    <browser:page
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        name="currency-controlpanel"
+        class=".controlpanel.ControlPanel"
+        permission="cmf.ManagePortal"
+        allowed_attributes="template"
+        />
+
+    <browser:view
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      name="+currencies"
+      class=".currency.CurrencyAdding"
+      allowed_interface="simplon.plone.currency.browser.interfaces.ICurrencyAdding"
+      permission="cmf.ManagePortal"
+      />
+
+    <class class=".currency.CurrencyAdding">
+      <require
+        permission="cmf.ManagePortal"
+        interface="simplon.plone.currency.browser.interfaces.ICurrencyAdding" />
+    </class>
+
+    <browser:page
+      for="simplon.plone.currency.browser.interfaces.ICurrencyAdding"
+      name="Currency"
+      class=".currency.CurrencyAddForm"
+      permission="cmf.ManagePortal"
+      />
+
+    <browser:page
+      for="simplon.plone.currency.interfaces.ICurrency"
+      name="edit"
+      class=".currency.CurrencyEditForm"
+      permission="cmf.ManagePortal"
+      />
+
+  <adapter
+    factory=".currency.CurrencyNamespace"
+    name="currency"
+    />
+    
+    <configure package="Products.CMFDefault.skin">
+        <browser:page
+          name="five_template"
+          for="simplon.plone.currency.interfaces.ICurrency"
+          template="five_template.pt"
+          permission="zope2.View"
+          />
+      </configure>
+
+</configure>

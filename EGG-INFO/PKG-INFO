@@ -1,0 +1,79 @@
+Metadata-Version: 1.0
+Name: simplon.plone.currency
+Version: 1.0b2
+Summary: Currency handling for Plone
+Home-page: https://code.simplon.biz/svn/zope/simplon.plone.currency/trunk
+Author: Wichert Akkerman
+Author-email: wichert@simplon.biz
+License: GPL
+Description: Currency support for Plone
+        ==========================
+        
+        This package adds currency handling support to a Plone site. Site managers
+        can enable any of the standard currencies in a site and manage the currency
+        rates.
+        
+        Installing
+        ----------
+        
+        This package is made to be used as a normal python package within Zope 2.10
+        and needs Plone 3.0 or later. 
+        
+        First you need to install this package in the python path for your
+        Zope instance. This can be done by installing it in either your system
+        path packages or in the lib/python directory in your Zope instance.
+        
+        After installing the package it needs to be registered in your Zope instance.
+        This can be done by putting a simplon.plone.currency-configure.zcml file in the
+        etc/pakage-includes directory with this content::
+        
+          <include package="simplon.plone.currency" />
+        
+        or, alternatively, you can add that line to the configure.zcml in a
+        package or Product that is already registered.
+        
+        Installing with buildout
+        ------------------------
+        
+        If you are using `buildout`_ to manage your instance installing
+        simplon.plone.currency is even simpler. You can install it by adding
+        it to the eggs line for your instance::
+        
+          [instance]
+          eggs = simplon.plone.currency
+          zcml = simplon.plone.currency
+        
+        The last line tells buildout to generate a zcml snippet that tells Zope
+        to configure simplon.plone.currency.
+        
+        .. _buildout: http://pypi.python.org/pypi/zc.buildout
+        
+        
+        Managing currencies
+        -------------------
+        
+        In order to manage currencies you first need to install the package
+        in your Plone site. You can do this using the standard Add/Remove Products
+        page in the Plone site setup. You need to install the 'Currency support'
+        product.
+        
+        After installing the package in your site a new Currencies option
+        will be available in the site setup. This is where you can manage your
+        currencies.
+        
+        Currencies can be added using the 'Add currency' button. You only
+        need to select the currency and the conversion rate: the currency
+        description and symbol will be configured automatically.
+        
+        You have to select a single currency as the 'main currency'. This is the
+        currency against which all conversion rates are defined. You can not
+        edit or remove the main currency: its rate is fixed to 1.0 as reference
+        value for all rates.
+        
+        
+Platform: UNKNOWN
+Classifier: Framework :: Plone
+Classifier: Framework :: Zope2
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP :: Site Management
+Classifier: Topic :: Software Development :: Libraries :: Python Modules

@@ -1,0 +1,29 @@
+This is a doctest which tests the user interface for simplon.plone.currency.
+Before we can test our product we first need to install it using the
+standard Add-on Products functionality:
+
+  >>> self.setRoles(["Manager"])
+  >>> browser = self.getBrowser(loggedIn=True)
+  >>> browser.open(self.portal.absolute_url())
+  >>> browser.getLink("Site Setup").click()
+  >>> browser.getLink("Add-on Products").click()
+  >>> browser.getControl("Currency Support").click()
+  >>> browser.getControl("Install").click()
+
+After installing the currency support a new Currencies option will appear
+in the site setup:
+
+  >>> browser.getLink("Up to Site Setup").click()
+  >>> "Currencies" in browser.contents
+  >>> browser.getLink("Currencies").click()
+
+In its default configuration the site will only know the Euro, which is
+configured as the base currency:
+
+  >>> curency=browser.getControl(id="form.currency")
+  >>> currency.value
+  EUR
+
+
+
+

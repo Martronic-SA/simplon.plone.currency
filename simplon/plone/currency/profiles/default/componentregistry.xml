@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<componentregistry>
+ <utilities>
+  <utility
+     interface="simplon.plone.currency.interfaces.ICurrencyManager"
+     factory="simplon.plone.currency.manager.CurrencyManager"/>
+ </utilities>
+</componentregistry>
